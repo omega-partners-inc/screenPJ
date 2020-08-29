@@ -7,10 +7,10 @@
     </div>
     {% endfor %}
 
-    <a href="{% url 'user_data_input' %}" class="btn btn-primary btn-lg">戻る</a>
+    <a href="{% url 'user_data_input' %}" class="btn btn-primary btn-lg">Modify</a>
     <hr>
     <form action="{% url 'user_data_create' %}" method="POST">
-        <button type="submit" class="btn btn-primary btn-lg">送信</button>
+        <button type="submit" class="btn btn-primary btn-lg">Register</button>
         {% csrf_token %}
     </form>
 {% endblock %}
