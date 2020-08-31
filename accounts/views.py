@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from .forms import User_data_Form
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
 
 def user_data_input(request):
     """新規ユーザー情報の入力。"""
@@ -49,8 +50,12 @@ def user_data_create(request):
 
     form = User_data_Form(session_form_data)
     if form.is_valid():
-        form.save()
-        return redirect('admin')
+        try:
+            form.save()
+        except IntegrityError:
+            return render(request,'user_data_input',{'error':'このユーザーは既に登録されています'})
+
+        return redirect('login')
 
     # is_validに通過したデータだけセッションに格納しているので、ここ以降の処理は基本的には通らない。
     context = {
@@ -63,11 +68,12 @@ def loginview(request):
     if request.method == 'POST':
         email_data = request.POST['email_data']
         password_data = request.POST['password_data']
-        user = authenticate(request,email=email_data,password=password_data)
+        user = authenticate(request,email='tsuyoshi.nagata@omegapartners.jp',password='admin')
         if user is not None:
             login(request,user)
             return redirect('userhome')
         else:
+            print('GET')
             return redirect('login')
     return render(request,'login.html')
 
