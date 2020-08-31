@@ -68,7 +68,7 @@ def loginview(request):
     if request.method == 'POST':
         email_data = request.POST['email_data']
         password_data = request.POST['password_data']
-        user = authenticate(request,email='tsuyoshi.nagata@omegapartners.jp',password='admin')
+        user = authenticate(request,email=email_data,password=password_data)
         if user is not None:
             login(request,user)
             return redirect('userhome')
