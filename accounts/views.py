@@ -73,7 +73,7 @@ def loginview(request):
             login(request,user)
             return redirect('userhome')
         else:
-            print('GET')
+            print(email_data,password_data)
             return redirect('login')
     return render(request,'login.html')
 
