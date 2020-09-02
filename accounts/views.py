@@ -5,6 +5,8 @@ from .forms import User_data_Form
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
+from django.contrib.auth.views import LoginView, LogoutView
+
 
 def user_data_input(request):
     """新規ユーザー情報の入力。"""
@@ -71,7 +73,7 @@ def loginview(request):
         user = authenticate(request,email=email_data,password=password_data)
         if user is not None:
             login(request,user)
-            return redirect('userhome')
+            return redirect('accounts:userhome')
         else:
             print(email_data,password_data)
             return redirect('login')
@@ -81,3 +83,7 @@ def loginview(request):
 def userhomeview(request):
     object_userdata = CustomUser.objects.all()
     return render(request,'userhome.html',{'object_userdata':object_userdata})
+
+class Logout(LogoutView):
+    """ログアウトページ"""
+    template_name = 'login.html'

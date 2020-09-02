@@ -9,7 +9,7 @@
     <div style="text-align: right;">
     {% if user.is_authenticated %}
     <p><h4>{{ user.get_username }}でログイン中</h4></p>
-    <a href="{% url 'login' %}"><h4>ログアウトする</h4></a>
+    <a href="{% url 'accounts:logout' %}"><h4>ログアウトする</h4></a>
     {% else %}
     <p>ログインしていません</p>
     {% endif %}
