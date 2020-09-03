@@ -7,9 +7,9 @@
     </div>
     {% endfor %}
 
-    <a href="{% url 'user_data_input' %}" class="btn btn-primary btn-lg">Modify</a>
+    <a href="{% url 'accounts:user_data_input' %}" class="btn btn-primary btn-lg">Modify</a>
     <hr>
-    <form action="{% url 'user_data_create' %}" method="POST">
+    <form action="{% url 'accounts:user_data_create' %}" method="POST">
         <button type="submit" class="btn btn-primary btn-lg">Register</button>
         {% csrf_token %}
     </form>

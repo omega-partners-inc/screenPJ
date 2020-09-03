@@ -19,7 +19,7 @@ def user_data_input(request):
         if form.is_valid():
             # 入力後の送信ボタンでここ。セッションに入力データを格納する。
             request.session['form_data'] = request.POST
-            return redirect('user_data_confirm')
+            return redirect('accounts:user_data_confirm')
 
     context = {
         'form': form
@@ -32,7 +32,7 @@ def user_data_confirm(request):
     session_form_data = request.session.get('form_data')
     if session_form_data is None:
         # セッション切れや、セッションが空でURL直接入力したら入力画面にリダイレクト。
-        return redirect('user_data_input')
+        return redirect('accounts:user_data_input')
 
     context = {
         'form': User_data_Form(session_form_data)
@@ -48,22 +48,22 @@ def user_data_create(request):
     if session_form_data is None:
         # ここにはPOSTメソッドで、かつセッションに入力データがなかった場合だけ。
         # セッション切れや、不正なアクセス対策。
-        return redirect('user_data_input')
+        return redirect('accounts:user_data_input')
 
     form = User_data_Form(session_form_data)
     if form.is_valid():
         try:
             form.save()
         except IntegrityError:
-            return render(request,'user_data_input',{'error':'このユーザーは既に登録されています'})
+            return render(request,'accounts:user_data_input',{'error':'このユーザーは既に登録されています'})
 
-        return redirect('login')
+        return redirect('accounts:login')
 
     # is_validに通過したデータだけセッションに格納しているので、ここ以降の処理は基本的には通らない。
     context = {
         'form': form
     }
-    return render(request, 'user_data_input', context)
+    return render(request, 'accounts:user_data_input', context)
 
 
 def loginview(request):
