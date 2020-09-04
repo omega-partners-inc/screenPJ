@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.contrib.auth.views import LoginView, LogoutView
+from django.views import generic
 
 
 def user_data_input(request):
@@ -87,3 +88,7 @@ def userhomeview(request):
 class Logout(LogoutView):
     """ログアウトページ"""
     template_name = 'login.html'
+
+
+class Index(generic.TemplateView):
+    template_name = 'Index.html'
